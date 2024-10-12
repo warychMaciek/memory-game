@@ -1,0 +1,20 @@
+$breakpoints: (
+    "phone": 576px,
+    "tablet": 768px,
+    "laptop": 1200px,
+    "desktop": 1620px,
+);
+
+@mixin from($width) {
+    @if map_has_key($breakpoints, $width) {
+        $width: map_get($breakpoints, $width);
+
+        @media (min-width: ($width)) {
+            @content;
+        }
+    } @else if type_of($width) == number and unit($width) == px or unit($width) == em or unit($width) == rem {
+        @media (min-width: ($width)) {
+            @content;
+        }
+    }
+}

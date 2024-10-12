@@ -1,0 +1,13 @@
+.card {
+    width: 200px;
+    height: 250px;
+    position: relative;
+    border: 1px solid #ccc;
+    background-color: cornflowerblue;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
