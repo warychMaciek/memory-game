@@ -9,9 +9,10 @@ type DifficultyLevel = 6 | 8 | 12
 
 const Settings = ({ setDifficulty }: SettingsProps) => {
     const [ selectedDifficulty, setSelectedDifficulty ] = useState<DifficultyLevel>(8)
-    const { resetStats } = useStatsStore()
+    const { resetStats, attempts, addGameToHistory } = useStatsStore()
 
     const handleDifficultyChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (attempts > 0) addGameToHistory()
         const value = parseInt(event.target.value, 10) as DifficultyLevel
         setSelectedDifficulty(value)
         setDifficulty(value)

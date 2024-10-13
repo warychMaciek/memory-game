@@ -1,14 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Board from "./components/Board/Board"
 import Settings from "./components/Settings/Settings"
 import useGetCards from "./hooks/useGetCards"
 import Stats from "./components/Stats/Stats"
 import useStatsStore from "./store/statsStore"
+import GameHistory from "./components/GameHistory/GameHistory"
 
 function App() {
     const [ numPairs, setNumPairs ] = useState(8)
     const { cards, handleClick } = useGetCards(numPairs)
-    const { setDiffLevel } = useStatsStore()
+    const { setDiffLevel, loadGameHistory } = useStatsStore()
+
+    useEffect(() => {
+        loadGameHistory()
+    }, [loadGameHistory])
 
     const setDifficulty = (newNumPairs: number) => {
         setNumPairs(newNumPairs)
@@ -20,6 +25,7 @@ function App() {
             <Settings setDifficulty={setDifficulty} />
             <Board cards={cards} handleClick={handleClick} />
             <Stats />
+            <GameHistory />
         </>
     )
 }

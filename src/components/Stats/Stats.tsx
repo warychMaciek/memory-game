@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react"
 import useStatsStore from "../../store/statsStore"
 import "./Stats.scss"
+import { formatTime } from "../../utils/formatTime"
 
 const Stats = () => {
-    const { attempts, diffLevel, matchedPairs, time, incrementTime, resetTime } = useStatsStore()
+    const { attempts, diffLevel, matchedPairs, time, incrementTime, resetTime, addGameToHistory } = useStatsStore()
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
     useEffect(() => {
@@ -23,14 +24,9 @@ const Stats = () => {
     useEffect(() => {
         if (matchedPairs === diffLevel && timerRef.current) {
             clearInterval(timerRef.current)
+            addGameToHistory()
         }
     }, [matchedPairs, diffLevel])
-
-    const formatTime = (time: number) => {
-        const mins = Math.floor(time / 60)
-        const secs = time % 60
-        return `${mins < 10 ? `0${mins}` : mins}:${secs < 10 ? `0${secs}` : secs}`
-    }
 
     return (
         <section className="stats">
