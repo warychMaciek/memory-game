@@ -8,7 +8,7 @@ import GameHistory from "./components/GameHistory/GameHistory"
 
 function App() {
     const [ numPairs, setNumPairs ] = useState(8)
-    const { cards, handleClick } = useGetCards(numPairs)
+    const { cards, handleClick, resetGame } = useGetCards(numPairs)
     const { setDiffLevel, loadGameHistory } = useStatsStore()
 
     useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
 
     return (
         <>
-            <Settings setDifficulty={setDifficulty} />
+            <Settings setDifficulty={setDifficulty} resetGame={resetGame} />
             <Board cards={cards} handleClick={handleClick} />
             <Stats />
             <GameHistory />

@@ -4,29 +4,32 @@ import "./Stats.scss"
 import { formatTime } from "../../utils/formatTime"
 
 const Stats = () => {
-    const { attempts, diffLevel, matchedPairs, time, incrementTime, resetTime, addGameToHistory } = useStatsStore()
+    const { attempts, diffLevel, matchedPairs, time, incrementTime, resetTime, addGameToHistory, gameStatus } = useStatsStore()
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
     useEffect(() => {
-        resetTime()
+        if (gameStatus === 'in-progress') {
 
-        timerRef.current = setInterval(() => {
-            incrementTime()
-        }, 1000)
+            resetTime()
+            
+            timerRef.current = setInterval(() => {
+                incrementTime()
+            }, 1000)
+        }
 
         return () => {
             if (timerRef.current) {
                 clearInterval(timerRef.current)
             }
         }
-    }, [diffLevel, resetTime, incrementTime])
+    }, [diffLevel, resetTime, incrementTime, gameStatus])
 
     useEffect(() => {
         if (matchedPairs === diffLevel && timerRef.current) {
             clearInterval(timerRef.current)
             addGameToHistory()
         }
-    }, [matchedPairs, diffLevel])
+    }, [matchedPairs, diffLevel, addGameToHistory])
 
     return (
         <section className="stats">

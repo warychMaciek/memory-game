@@ -21,7 +21,8 @@ type StatsType = {
     resetTime: () => void,
     gameHistory: GameHistoryType[],
     addGameToHistory: () => void,
-    loadGameHistory: () => void
+    loadGameHistory: () => void,
+    gameStatus: string
 }
 
 const useStatsStore = create<StatsType>((set) => ({
@@ -30,14 +31,19 @@ const useStatsStore = create<StatsType>((set) => ({
     matchedPairs: 0,
     time: 0,
     gameHistory: [],
+    gameStatus: 'in-progress',
 
     addAttempt: () => set((state) => ({ attempts: state.attempts + 1 })),
 
     setDiffLevel: (diffLevel: number) => set({ diffLevel }),
 
-    addMatchedPair: () => set((state) => ({ matchedPairs: state.matchedPairs + 1 })),
+    addMatchedPair: () => set((state) => {
+        const newMatchedPairs = state.matchedPairs + 1
+        const newGameStatus = newMatchedPairs === state.diffLevel ? 'completed' : state.gameStatus
+        return { matchedPairs: newMatchedPairs, gameStatus: newGameStatus }
+    }),
 
-    resetStats: () => set({ attempts: 0, matchedPairs: 0 }),
+    resetStats: () => set({ attempts: 0, matchedPairs: 0, time: 0, gameStatus: 'in-progress' }),
 
     incrementTime: () => set((state) => ({ time: state.time + 1 })),
 

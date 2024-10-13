@@ -7,7 +7,7 @@ const useGetCards = (numPairs: number) => {
     const [ cards, setCards ] = useState<CardType[]>([])
     const disabled = useRef(true)
     const prevIndex = useRef(-1)
-    const { addAttempt, addMatchedPair } = useStatsStore()
+    const { addAttempt, addMatchedPair, resetStats } = useStatsStore()
 
     useEffect(() => {
         const newCards = shuffleCards(numPairs)
@@ -57,7 +57,22 @@ const useGetCards = (numPairs: number) => {
         prevIndex.current = -1
     }
 
-    return { cards, handleClick }
+    const resetGame = () => {
+        resetStats()
+        const newCards = shuffleCards(numPairs)
+        setCards(newCards)
+        prevIndex.current = -1
+        disabled.current = true
+
+        const timeout = setTimeout(() => {
+            setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
+            disabled.current = false
+        }, 1000)
+
+        return () => clearTimeout(timeout)
+    }
+
+    return { cards, handleClick, resetGame }
 }
 
 export default useGetCards

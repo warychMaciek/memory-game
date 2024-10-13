@@ -2,14 +2,15 @@ import { ChangeEvent, useState } from "react"
 import useStatsStore from "../../store/statsStore"
 
 type SettingsProps = {
-    setDifficulty: (difficulty: number) => void
+    setDifficulty: (difficulty: number) => void,
+    resetGame: () => void
 }
 
 type DifficultyLevel = 6 | 8 | 12
 
-const Settings = ({ setDifficulty }: SettingsProps) => {
+const Settings = ({ setDifficulty, resetGame }: SettingsProps) => {
     const [ selectedDifficulty, setSelectedDifficulty ] = useState<DifficultyLevel>(8)
-    const { resetStats, attempts, addGameToHistory } = useStatsStore()
+    const { resetStats, attempts, addGameToHistory, gameStatus } = useStatsStore()
 
     const handleDifficultyChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (attempts > 0) addGameToHistory()
@@ -50,6 +51,13 @@ const Settings = ({ setDifficulty }: SettingsProps) => {
                     Hard
                 </label>
             </form>
+            {
+                gameStatus === 'completed' && (
+                    <div className="settings__modal">
+                        <button onClick={resetGame}>Play again!</button>
+                    </div>
+                )
+            }
         </section>
     )
 }
