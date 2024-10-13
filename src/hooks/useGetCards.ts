@@ -1,27 +1,25 @@
 import { useEffect, useRef, useState } from "react"
 import { shuffleCards } from "../utils/shuffleCards"
+import { CardType } from "../assets/types"
 
-type Card = {
-    id: number,
-    imageUrl: string,
-    status: string
-}
-
-const useGetCards = () => {
-    const [cards, setCards] = useState(shuffleCards())
+const useGetCards = (numPairs: number) => {
+    const [ cards, setCards ] = useState<CardType[]>([])
     const disabled = useRef(true)
     const prevIndex = useRef(-1)
 
     useEffect(() => {
+        const newCards = shuffleCards(numPairs)
+        setCards(newCards)
+        
         const timeout = setTimeout(() => {
             setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
             disabled.current = false
         }, 1000)
 
         return () => clearTimeout(timeout)
-    }, [])
+    }, [numPairs])
 
-    const updateCardStatus = (cardsArr: Omit<Card, "id">[], status: string) => {
+    const updateCardStatus = (cardsArr: Omit<CardType, "id">[], status: string) => {
         cardsArr.forEach(card => card.status = status)
         setCards([...cards])
     }

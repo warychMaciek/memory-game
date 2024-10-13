@@ -9,4 +9,6 @@ export const imagesData = [
     '/images/08.jpg',
     '/images/09.jpg',
     '/images/10.jpg',
+    '/images/11.jpg',
+    '/images/12.jpg',
 ]

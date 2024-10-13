@@ -1,10 +1,13 @@
 import './Board.scss'
-import useGetCards from "../../hooks/useGetCards"
 import Card from '../Card/Card'
+import { CardType } from '../../assets/types'
 
-const Board = () => {
-    const { cards, handleClick } = useGetCards()
+type BoardProps = {
+    cards: CardType[],
+    handleClick: (index: number) => void
+}
 
+const Board = ({ cards, handleClick }: BoardProps) => {
     return (
         <section className="board">
             {cards.map((card, index) => (

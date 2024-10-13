@@ -1,10 +1,10 @@
 import { imagesData } from "../assets/imagesData"
 
-export const shuffleCards = () => {
+export const shuffleCards = (numPairs: number) => {
     const selectedCards = []
     const usedIndices = new Set<number>()
 
-    while (selectedCards.length < 5) {
+    while (selectedCards.length < numPairs) {
         const randomIndex = Math.floor(Math.random() * imagesData.length)
         if (!usedIndices.has(randomIndex)) {
             selectedCards.push({
