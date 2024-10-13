@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react"
+import useStatsStore from "../../store/statsStore"
 
 type SettingsProps = {
     setDifficulty: (difficulty: number) => void
@@ -8,11 +9,13 @@ type DifficultyLevel = 6 | 8 | 12
 
 const Settings = ({ setDifficulty }: SettingsProps) => {
     const [ selectedDifficulty, setSelectedDifficulty ] = useState<DifficultyLevel>(8)
+    const { resetStats } = useStatsStore()
 
     const handleDifficultyChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value, 10) as DifficultyLevel
         setSelectedDifficulty(value)
         setDifficulty(value)
+        resetStats()
     }
 
     return (

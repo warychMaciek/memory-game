@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react"
 import { shuffleCards } from "../utils/shuffleCards"
 import { CardType } from "../assets/types"
+import useStatsStore from "../store/statsStore"
 
 const useGetCards = (numPairs: number) => {
     const [ cards, setCards ] = useState<CardType[]>([])
     const disabled = useRef(true)
     const prevIndex = useRef(-1)
+    const { addAttempt, addMatchedPair } = useStatsStore()
 
     useEffect(() => {
         const newCards = shuffleCards(numPairs)
         setCards(newCards)
-        
+
         const timeout = setTimeout(() => {
             setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
             disabled.current = false
@@ -39,8 +41,11 @@ const useGetCards = (numPairs: number) => {
             return
         }
 
+        addAttempt()
+
         if (currCard.id === prevCard.id) {
             updateCardStatus([currCard, prevCard], 'matched')
+            addMatchedPair()
         } else {
             disabled.current = true
 
