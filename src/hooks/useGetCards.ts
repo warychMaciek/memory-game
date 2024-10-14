@@ -16,7 +16,7 @@ const useGetCards = (numPairs: number) => {
         const timeout = setTimeout(() => {
             setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
             disabled.current = false
-        }, 1000)
+        }, 2000)
 
         return () => clearTimeout(timeout)
     }, [numPairs])

@@ -1,6 +1,7 @@
 import './Board.scss'
 import Card from '../Card/Card'
 import { CardType } from '../../assets/types'
+import useStatsStore from '../../store/statsStore'
 
 type BoardProps = {
     cards: CardType[],
@@ -8,8 +9,10 @@ type BoardProps = {
 }
 
 const Board = ({ cards, handleClick }: BoardProps) => {
+    const diffLevel = useStatsStore(state => state.diffLevel)
+
     return (
-        <section className="board">
+        <section className={`board --rows-${diffLevel / 2}`}>
             {cards.map((card, index) => (
                 <Card 
                     key={index} 

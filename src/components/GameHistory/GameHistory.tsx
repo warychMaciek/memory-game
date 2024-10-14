@@ -2,7 +2,12 @@ import useStatsStore from "../../store/statsStore"
 import "./GameHistory.scss"
 import { formatTime } from "../../utils/formatTime"
 
-const GameHistory = () => {
+type GameHistoryProps = {
+    isHistoryActive: boolean,
+    handleGameHistoryClose: () => void
+}
+
+const GameHistory = ({ isHistoryActive, handleGameHistoryClose }: GameHistoryProps) => {
     const gameHistory = useStatsStore(state => state.gameHistory)
 
     const getDifficultyLabel = (difficulty: number): string => {
@@ -19,7 +24,8 @@ const GameHistory = () => {
     }
 
     return (
-        <section className="game-history">
+        <section className={`game-history ${isHistoryActive ? '--active' : ''}`}>
+            <button onClick={handleGameHistoryClose} className="game-history__close-button">X</button>
             <h2>Game History</h2>
             <table>
                 <thead>

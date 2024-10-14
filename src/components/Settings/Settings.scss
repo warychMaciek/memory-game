@@ -1,0 +1,136 @@
+.settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-bottom-right-radius: 10px;
+    z-index: 1;
+
+    @include from(laptop) {
+        padding: 20px;
+    }
+    @include from(desktop) {
+        left: calc((100vw - 1620px) / 2);
+        border-bottom-left-radius: 10px;
+    }
+
+    &__mobile-switcher {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+        z-index: 1;
+        cursor: pointer;
+
+        @include from(laptop) {
+            width: 40px;
+            height: 40px;
+            font-size: 1.8rem;
+        }
+        @media (hover: hover) {
+            &:hover {
+                color: rgba(243,146,122,1);
+            }
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            transition: 0.3s ease-out;
+        }
+    }
+    &__form {
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        padding: 60px 20px 20px;
+        transition: transform 0.3s ease-out;
+        transform: translateY(-100%);
+        transition-delay: 0.3s;
+        text-align: right;
+
+        @include from(phoneL) {
+            padding: 60px 40px 40px;
+        }
+        @include from(laptop) {
+            padding: 60px 100px 40px;
+        }
+        @include from(desktop) {
+            max-width: 1620px;
+            left: calc((100vw - 1620px) / 2);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        &.--active {
+            transform: translateY(0);
+            transition-delay: 0s;
+
+            & > * {
+                opacity: 1;
+                transition-delay: 0.3s;
+            }
+        }
+
+        h3 {
+            margin-bottom: 10px;
+            transition: 0.3s ease-out;
+            transition-delay: 0;
+            opacity: 0;
+        }
+
+        &-inputs-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+            transition: 0.3s ease-out;
+            opacity: 0;
+            transition-delay: 0;
+
+            label {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                transition: 0.3s ease-out;
+                cursor: pointer;
+
+                @media (hover: hover) {
+                    &:hover {
+                        color: rgba(243,146,122,1);
+                    }
+                }
+            }
+        }
+    }
+    &__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            background: linear-gradient(180deg, rgba(243,146,122,1) 0%, rgba(231,50,148,1) 50%, rgba(224,46,155,1) 100%);
+            border: none;
+            color: #F9F9F9;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+    }
+}

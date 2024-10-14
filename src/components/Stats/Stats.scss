@@ -1,6 +1,111 @@
 .stats {
-    p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-top-left-radius: 10px;
+    z-index: 1;
+
+    @include from(laptop) {
+        background-color: transparent;
+    }
+ 
+    &__mobile-switcher {
+        background-color: transparent;
+        border: none;
         color: #fff;
-        font-size: 2.5rem;
+        width: 25px;
+        height: 25px;
+        z-index: 1;
+        cursor: pointer;
+
+        @include from(laptop) {
+            display: none;
+        }
+        @media (hover: hover) {
+            &:hover {
+                color: rgba(243,146,122,1);
+            }
+        }
+ 
+        svg {
+            width: 100%;
+            height: 100%;
+            transition: 0.3s ease-out;
+        }
+    }
+
+    &__wrapper {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        padding: 20px 20px 40px;
+        transition: 0.3s ease-out;
+        transform: translateY(100%);
+        transition-delay: 0.3s;
+
+        @include from(phoneL) {
+            padding: 40px;
+        }
+        @include from(laptop) {
+            transform: unset;
+            transition: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 100px;
+        }
+        @include from(desktop) {
+            max-width: 1620px;
+            left: calc((100vw - 1620px) / 2);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+
+        }
+
+        &.--active {
+            transform: translateY(0);
+            transition-delay: 0s;
+
+            & > * {
+                opacity: 1;
+                transition-delay: 0.3s;
+            }
+        }
+        p {
+            transition: 0.3s ease-out;
+            opacity: 0;
+            transition-delay: 0s;
+
+            @include from(laptop) {
+                opacity: 1;
+            }
+        }
+    }
+    &__history-button {
+        background: linear-gradient(180deg, rgba(243,146,122,1) 0%, rgba(231,50,148,1) 50%, rgba(224,46,155,1) 100%);
+        border: none;
+        color: #F9F9F9;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        transition: 0.3s ease-out;
+        opacity: 0;
+
+        @include from(laptop) {
+            opacity: 1;
+            margin-top: 0;
+        }
     }
 }

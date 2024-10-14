@@ -4,7 +4,6 @@ import Settings from "./components/Settings/Settings"
 import useGetCards from "./hooks/useGetCards"
 import Stats from "./components/Stats/Stats"
 import useStatsStore from "./store/statsStore"
-import GameHistory from "./components/GameHistory/GameHistory"
 
 function App() {
     const [ numPairs, setNumPairs ] = useState(8)
@@ -25,7 +24,6 @@ function App() {
             <Settings setDifficulty={setDifficulty} resetGame={resetGame} />
             <Board cards={cards} handleClick={handleClick} />
             <Stats />
-            <GameHistory />
         </>
     )
 }
