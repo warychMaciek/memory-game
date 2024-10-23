@@ -3,3 +3,5 @@ export type CardType = {
     imageUrl: string,
     status: string
 }
+
+export type CardsSetTopic = "animals" | "architecture" | "nature" | "default"

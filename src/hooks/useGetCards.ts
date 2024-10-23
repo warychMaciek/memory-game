@@ -3,23 +3,23 @@ import { shuffleCards } from "../utils/shuffleCards"
 import { CardType } from "../assets/types"
 import useStatsStore from "../store/statsStore"
 
-const useGetCards = (numPairs: number) => {
+const useGetCards = (numPairs: number, cardsSet: string[]) => {
     const [ cards, setCards ] = useState<CardType[]>([])
     const disabled = useRef(true)
     const prevIndex = useRef(-1)
     const { addAttempt, addMatchedPair, resetStats } = useStatsStore()
 
     useEffect(() => {
-        const newCards = shuffleCards(numPairs)
+        const newCards = shuffleCards(numPairs, cardsSet)
         setCards(newCards)
 
         const timeout = setTimeout(() => {
             setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
             disabled.current = false
-        }, 2000)
+        }, 3000)
 
         return () => clearTimeout(timeout)
-    }, [numPairs])
+    }, [numPairs, cardsSet])
 
     const updateCardStatus = (cardsArr: Omit<CardType, "id">[], status: string) => {
         cardsArr.forEach(card => card.status = status)
@@ -59,7 +59,7 @@ const useGetCards = (numPairs: number) => {
 
     const resetGame = () => {
         resetStats()
-        const newCards = shuffleCards(numPairs)
+        const newCards = shuffleCards(numPairs, cardsSet)
         setCards(newCards)
         prevIndex.current = -1
         disabled.current = true
@@ -67,7 +67,7 @@ const useGetCards = (numPairs: number) => {
         const timeout = setTimeout(() => {
             setCards(prevCards => prevCards.map(card => ({ ...card, status: 'facedown' })))
             disabled.current = false
-        }, 1000)
+        }, 3000)
 
         return () => clearTimeout(timeout)
     }

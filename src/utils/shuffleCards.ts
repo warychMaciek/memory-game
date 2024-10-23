@@ -1,14 +1,17 @@
 import { imagesData } from "../assets/imagesData"
 
-export const shuffleCards = (numPairs: number) => {
+export const shuffleCards = (numPairs: number, cardsSet: string[]) => {
     const selectedCards = []
     const usedIndices = new Set<number>()
+    let cardsImagesUrls: string[] = []
+
+    cardsSet.length === 0 ? cardsImagesUrls = [...imagesData] : cardsImagesUrls = [...cardsSet]
 
     while (selectedCards.length < numPairs) {
-        const randomIndex = Math.floor(Math.random() * imagesData.length)
+        const randomIndex = Math.floor(Math.random() * cardsImagesUrls.length)
         if (!usedIndices.has(randomIndex)) {
             selectedCards.push({
-                imageUrl: imagesData[randomIndex],
+                imageUrl: cardsImagesUrls[randomIndex],
                 id: randomIndex
             })
             usedIndices.add(randomIndex)
